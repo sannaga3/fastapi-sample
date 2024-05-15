@@ -16,7 +16,7 @@ settings = get_settings()
 ALGORITHM = settings.algorithm
 JWT_SECRET_KEY = settings.jwt_secret_key
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
 
 def create_user(db: Session, user: UserCreate):
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

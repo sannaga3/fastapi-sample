@@ -13,7 +13,7 @@ from starlette import status
 DbDependency = Annotated[Session, Depends(get_db)]
 formDependency = Annotated[OAuth2PasswordRequestForm, Depends()]
 
-router = APIRouter(prefix="/auth", tags=["auth"])
+router = APIRouter(prefix="/api/auth", tags=["auth"])
 
 @router.post("/signup", response_model = User, status_code=status.HTTP_200_OK)
 async def create_user(db: DbDependency, user: UserCreate):
@@ -22,12 +22,15 @@ async def create_user(db: DbDependency, user: UserCreate):
 
 @router.post("/login", status_code = status.HTTP_200_OK, response_model=Token)
 async def login_user(db: DbDependency, form_data: formDependency):
+    if not form_data.username or not form_data.password:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="ユーザー名とパスワードを両方入力してください")
+    
     user = auth_cruds.authenticate_user(db, form_data.username, form_data.password)
     if not user:
-        raise HTTPException(status_code=401, detail="Incorrect email or password.")
+        raise HTTPException(status_code=401, detail="ユーザー名とパスワードを正しく入力してください")
     
     token = auth_cruds.create_token(user.username, user.id, timedelta(minutes=30))
     return {
-      "access_token": token,
-      "token_type": "bearer"
+        "access_token": token,
+        "token_type": "bearer"
     }

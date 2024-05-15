@@ -1,6 +1,6 @@
 FastAPI の勉強用
 
-#### 導入手順
+#### 導入手順 バックエンド
 
 ```
 docker-compose up -d
@@ -20,4 +20,20 @@ http://localhost:8000/docs#/
 
 ```
 python -m pytest
+```
+
+#### 導入手順 フロントエンド
+
+```
+npm i
+```
+
+```
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```

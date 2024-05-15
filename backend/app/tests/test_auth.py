@@ -3,7 +3,7 @@ from fastapi.testclient import TestClient
 
 def test_signup(client_fixture: TestClient):
     response = client_fixture.post(
-        "/auth/signup",
+        "/api/auth/signup",
         json={
             "username": "testuser2",
             "email": "testuser2@example.com",
@@ -18,7 +18,7 @@ def test_signup(client_fixture: TestClient):
 
 def test_login(client_fixture: TestClient):
     response = client_fixture.post(
-        "/auth/login",
+        "/api/auth/login",
         data={"username": "testuser", "password": "password"}
     )
     assert response.status_code == 200
