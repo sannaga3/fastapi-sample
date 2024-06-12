@@ -5,9 +5,18 @@ export type LoadingContextProps = {
   setLoading: Dispatch<SetStateAction<boolean>>;
 };
 
-export type AuthTokenContextProps = {
+export type AuthContextProps = {
   authToken: string | null;
-  setTokenToLocalStorage: (token: string) => void;
-  getTokenFromLocalStorage: () => void;
-  removeTokenFromLocalStorage: () => void;
+  setToken: Dispatch<SetStateAction<string | null>>;
+  loginUser: LoginUser | null;
+  setLoginUser: Dispatch<SetStateAction<LoginUser | null>>;
+};
+
+export type LoginUser = {
+  id: number;
+  username: string;
+  email: string;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
 };

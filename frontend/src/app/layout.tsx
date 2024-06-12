@@ -1,5 +1,5 @@
 import NavLinks from "@/components/NavLinks";
-import { AuthTokenProvider } from "@/providers/AuthTokenProvider";
+import { AuthProvider } from "@/providers/AuthProvider";
 import { LoadingProvider } from "@/providers/LoadingProvider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -20,14 +20,14 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className={inter.className}>
-        <AuthTokenProvider>
+        <AuthProvider>
           <LoadingProvider>
             <div className="mb-5">
               <NavLinks />
             </div>
             {children}
           </LoadingProvider>
-        </AuthTokenProvider>
+        </AuthProvider>
       </body>
     </html>
   );

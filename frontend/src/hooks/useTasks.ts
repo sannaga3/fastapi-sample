@@ -2,11 +2,11 @@ import { useLoading } from "@/hooks/common/useLoadingContext";
 import { api } from "@/lib/apiClient";
 import { useState } from "react";
 import { StoreTaskRequest, UpdateTaskRequest } from "./../types/task";
-import { useAuthToken } from "./common/useAuthTokenContext";
+import { useAuthContext } from "./common/useAuthContext";
 
 const useTasks = () => {
   const { setLoading } = useLoading();
-  const { authToken } = useAuthToken();
+  const { authToken } = useAuthContext();
   const [error, setError] = useState<string | null>(null);
 
   const getTasks = async () => {

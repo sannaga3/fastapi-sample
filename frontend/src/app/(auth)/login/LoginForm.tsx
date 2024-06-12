@@ -1,8 +1,9 @@
 import Button from "@/components/Button";
 import FormErrorMessage from "@/components/FormErrorMessage";
 import Input from "@/components/Input";
-import { useAuthToken } from "@/hooks/common/useAuthTokenContext";
+import { useAuthContext } from "@/hooks/common/useAuthContext";
 import { useAuth } from "@/hooks/useAuth";
+import { setCookie } from "@/utils/cookies";
 import { useRouter } from "next/navigation";
 import { FC } from "react";
 import { useForm } from "react-hook-form";
@@ -10,7 +11,7 @@ import { useForm } from "react-hook-form";
 const LoginForm: FC = () => {
   const router = useRouter();
   const { error, login } = useAuth();
-  const { setTokenToLocalStorage } = useAuthToken();
+  const { setToken } = useAuthContext();
 
   const {
     register,
@@ -32,7 +33,8 @@ const LoginForm: FC = () => {
     const data = await login(username, password);
     const authToken = data?.access_token || null;
     if (authToken) {
-      setTokenToLocalStorage(authToken);
+      setToken(authToken);
+      setCookie("task-app-token", authToken, 1);
       router.push(`/tasks/list?flash=ログインに成功しました&type=success`);
     } else {
       router.push(`/login`);

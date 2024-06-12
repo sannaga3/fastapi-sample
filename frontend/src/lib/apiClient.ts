@@ -29,17 +29,16 @@ export const api = async (
     urlAndQuery = `${url}?${query}`;
   }
 
-  if (method !== "GET") {
-    params = {
-      method: method,
-      body: requestBody,
-      headers: {
-        "Content-Type": contentType,
-      },
-    };
-    if (authToken) {
-      params.headers!.Authorization = `Bearer ${authToken}`;
-    }
+  params = {
+    method: method,
+    body: requestBody,
+    headers: {
+      "Content-Type": contentType,
+    },
+  };
+
+  if (authToken) {
+    params.headers!.Authorization = `Bearer ${authToken}`;
   }
 
   const res = await fetch(urlAndQuery ?? url, params);

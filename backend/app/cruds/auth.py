@@ -71,3 +71,12 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
         return TokenData(username=username, user_id=user_id)
     except JWTError:
         raise JWTError
+    
+
+def find_me(db: Session, user_id: int):
+    return (
+        db.query(User)
+            .filter(User.id == user_id)
+            .filter(User.deleted_at == None)
+            .first()
+    )

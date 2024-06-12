@@ -2,7 +2,7 @@ from fastapi.testclient import TestClient
 
 
 def test_signup(client_fixture: TestClient):
-    response = client_fixture.post(
+    res = client_fixture.post(
         "/api/auth/signup",
         json={
             "username": "testuser2",
@@ -10,17 +10,25 @@ def test_signup(client_fixture: TestClient):
             "password": "password2"
         }
     )
-    assert response.status_code == 200
-    assert "id" in response.json()
-    assert response.json()["username"] == "testuser2"
-    assert response.json()["email"] == "testuser2@example.com"
+    assert res.status_code == 200
+    assert "id" in res.json()
+    assert res.json()["username"] == "testuser2"
+    assert res.json()["email"] == "testuser2@example.com"
 
 
 def test_login(client_fixture: TestClient):
-    response = client_fixture.post(
+    res = client_fixture.post(
         "/api/auth/login",
         data={"username": "testuser", "password": "password"}
     )
-    assert response.status_code == 200
-    assert "access_token" in response.json()
-    assert "token_type" in response.json()
+    assert res.status_code == 200
+    assert "access_token" in res.json()
+    assert "token_type" in res.json()
+
+
+def test_me(client_fixture: TestClient):    
+    res = client_fixture.get("/api/auth/me")
+    assert res.status_code == 200
+    user = res.json()
+    assert user["username"] == "testuser"
+    assert user["email"] == "test@example.com"

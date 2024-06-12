@@ -42,7 +42,20 @@ const useAuth = () => {
     return data;
   };
 
-  return { signUp, login, error };
+  const findMe = async (authToken: string) => {
+    setLoading(true);
+    setError(null);
+
+    const res = await api("/auth/me", "GET", null, authToken);
+    const data = await res.json();
+
+    setLoading(false);
+
+    if (!res.ok) return setError(data.detail);
+    return data;
+  };
+
+  return { signUp, login, findMe, error };
 };
 
 export { useAuth };
